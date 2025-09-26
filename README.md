@@ -1,180 +1,134 @@
+# Campus Course & Records Manager (CCRM) - README
 
-# Campus Course & Records Manager (CCRM)
+CCRM is a console-based Java application for managing student records, courses, enrollments, and grades. It's a Java SE 17 project demonstrating core OOP principles, modern Java APIs, and key design patterns through a command-line interface (CLI).
 
-## 📌 Project Overview
+-----
 
-The **Campus Course & Records Manager (CCRM)** is a **console-based Java SE application** that enables an institute to manage:
+## 1\. How to Run
 
-* 👨‍🎓 **Students** – Add, update, deactivate, enroll/unenroll in courses.
-* 📚 **Courses** – Add, update, deactivate, assign instructors, search, and filter.
-* 📝 **Grades & Transcripts** – Record marks, compute GPA, generate transcripts.
-* 📂 **File Utilities** – Import/export student/course data, backup/export with recursive utilities.
+**Prerequisites:**
 
-The project demonstrates **core Java concepts (OOP, Streams, Date/Time API, NIO.2, exception handling)** and integrates **design patterns (Singleton, Builder)** in a structured way.
+  * Java Development Kit (JDK) 17+
+  * Git
 
----
+**Execution:**
 
-## ⚙️ How to Run
+1.  **Clone:** `git clone <your-repository-link> && cd CCRM-Project`
+2.  **Compile:** `javac -d out src/edu/ccrm/cli/Main.java`
+3.  **Run:** `java -cp out edu.ccrm.cli.Main`
 
-### Requirements
+-----
 
-* **Java SE 17+** (preferred)
-* **Eclipse IDE / IntelliJ IDEA / CLI (javac + java)**
-* OS: Windows/Linux/Mac
+## 2\. Core Java Concepts
 
-### Steps
+### Evolution of Java (Key Milestones)
 
-1. Clone the repository:
+  * **J2SE 5.0 (2004):** Added Generics, Enums, Annotations.
+  * **Java SE 7 (2011):** Introduced try-with-resources and NIO.2.
+  * **Java SE 8 (2014):** A major release with Lambdas, Streams, and a new Date/Time API.
+  * **Java SE 11 (2018):** First Long-Term Support (LTS) release in the new cadence.
+  * **Java SE 17 (2021):** Current LTS, adding Sealed Classes and Pattern Matching.
 
-   ```bash
-   git clone https://github.com/your-username/ccrm.git
-   cd ccrm
-   ```
-2. Compile and run:
+### Java Editions: ME vs SE vs EE
 
-   ```bash
-   javac -d bin src/edu/ccrm/Main.java
-   java -cp bin edu.ccrm.Main
-   ```
-3. Follow the **menu-driven console interface** to perform operations.
+| Feature        | Java ME (Micro Edition)              | Java SE (Standard Edition)          | Java EE (Enterprise Edition) -\> Jakarta EE |
+| -------------- | ------------------------------------ | ----------------------------------- | ------------------------------------------ |
+| **Target** | Embedded Systems, old mobile devices | Desktops, Servers (Core Platform)   | Large-scale, distributed web applications  |
+| **Scope** | Subset of SE API for small devices   | The foundational Java platform      | Superset of SE API for enterprise features |
+| **Technology** | `MIDP`, `CLDC`                       | `JDK`, `JRE`, `JVM`, `Swing`, `NIO` | `JPA`, `Servlets`, `JSP`, `EJB`            |
 
----
+### Java Architecture: JDK, JRE, JVM
 
-## 🚀 Minimum Demo Flow
+  * **JDK (Java Development Kit):** For developers. Contains tools to *compile* (`javac`), debug, and package code. It includes the JRE.
+  * **JRE (Java Runtime Environment):** For users. Provides the libraries and JVM needed to *run* Java applications.
+  * **JVM (Java Virtual Machine):** The core component that *executes* compiled Java bytecode. It provides platform independence.
 
-1. On start, **AppConfig (Singleton)** loads configuration (e.g., data folder path).
-2. CLI Menu provides options:
+### Errors vs. Exceptions
 
-   * Manage Students / Courses / Enrollment / Grades
-   * Import/Export Data
-   * Backup & Show Recursive Backup Size
-   * Reports (e.g., Top Students, GPA Distribution via Streams)
-   * Exit
-3. Perform **enrollments, record grades, and print transcript**.
-4. Run **export and backup** → timestamped backup folder created.
-5. Print platform note summarizing **Java ME vs SE vs EE**.
+  * **`Error`:** Critical, unrecoverable system-level failures (e.g., `OutOfMemoryError`). Applications should not try to catch them.
+  * **`Exception`:** Recoverable conditions an application can handle.
+      * **Checked:** Must be handled (`try-catch` or `throws`) by the compiler (e.g., `IOException`).
+      * **Unchecked (Runtime):** Usually programming mistakes (e.g., `NullPointerException`). Not enforced by the compiler.
 
----
+-----
 
-## 📂 Suggested Package Structure
+## 3\. Setup & Installation
 
-```
-edu.ccrm
-├─ cli/          // Menu, Input loop
-├─ domain/       // Person, Student, Instructor, Course, Enrollment, Grade, Semester
-├─ service/      // StudentService, CourseService, EnrollmentService, TranscriptService
-├─ io/           // ImportExportService, BackupService, CSV Parsers
-├─ util/         // Validators, Comparators, Recursion Utilities
-└─ config/       // AppConfig (Singleton), Builders
-```
+### Windows JDK Setup
 
----
+1.  Download and run the JDK 17 installer from Oracle.
+2.  Set the `JAVA_HOME` environment variable to your JDK path (e.g., `C:\Program Files\Java\jdk-17`).
+3.  Add `%JAVA_HOME%\bin` to your `Path` environment variable.
+4.  Verify with `java -version` in a new terminal.
+    ```
+    [Screenshot of 'java -version' output here]
+    ```
 
-## 📖 Java Concepts Demonstrated
+### Eclipse IDE Setup
 
-| Concept               | Where Used                                                               |
-| --------------------- | ------------------------------------------------------------------------ |
-| Encapsulation         | Student, Course classes (private fields + getters/setters)               |
-| Inheritance           | `Person (abstract)` → `Student`, `Instructor`                            |
-| Abstraction           | Abstract methods in `Person`                                             |
-| Polymorphism          | Transcript printing with overridden `toString()`                         |
-| Static Nested Class   | Inside `Course` (e.g., Builder)                                          |
-| Inner Class           | Inside `Student` (Transcript printer)                                    |
-| Interface             | `Persistable`, `Searchable<T>`                                           |
-| Enums                 | `Semester`, `Grade` with constructors & fields                           |
-| Functional Interfaces | Comparator lambdas for sorting                                           |
-| Anonymous Inner Class | CLI callback handler                                                     |
-| Singleton             | `AppConfig`                                                              |
-| Builder Pattern       | `Course.Builder`, `Transcript.Builder`                                   |
-| Exception Handling    | Custom `DuplicateEnrollmentException`, `MaxCreditLimitExceededException` |
-| Assertions            | Used for credit limits & null checks                                     |
-| Streams               | GPA distribution reports, search & filter                                |
-| NIO.2                 | Backup, import/export, recursive file utilities                          |
-| Date/Time API         | Enrollment dates, backup folder timestamps                               |
+1.  `File > New > Java Project`. Name it `CCRM`.
+2.  Select the JDK 17 JRE.
+3.  Copy the project's `edu` package into the `src` folder.
+4.  Right-click `Main.java` \> `Run As > Java Application`.
+    ```
+    [Screenshot of Eclipse project setup here]
+    ```
 
----
+-----
 
-## 🛠️ Technical Notes
+## 4\. Feature Demonstration Mapping
 
-### Evolution of Java
+| Requirement | Implementation Location (File / Class / Method) |
+| :--- | :--- |
+| **Packages & `main`** | `edu.ccrm.cli.Main`, overall package structure |
+| **Primitives, Operators** | `StudentService.calculateGpa()`, `Course.credits` |
+| **Decision Structures** | `CliHandler.mainMenu()` (`switch`), `StudentService.enrollStudent()` (`if-else`) |
+| **Loops & Jumps** | `CliHandler.run()` (`while`), `CourseService.listAllCourses()` (`for-each`) |
+| **Arrays & Utilities** | `StudentService.sortStudentsById()` using `Arrays.sort()` |
+| **String Methods** | `ImportExportService.parseStudentFromCsv()` uses `line.split()` |
+| **Encapsulation** | `Student.java`, `Course.java` (private fields, public getters) |
+| **Inheritance** | `Person` (abstract) -\> `Student` / `Instructor` (subclasses) |
+| **Abstraction** | `Person.java` (abstract class), `getProfileDetails()` (abstract method) |
+| **Polymorphism** | `TranscriptService.printTranscript(Person person)` |
+| **Access Levels** | `private`, `protected`, `public`, `default` used throughout |
+| **Immutability** | `domain.value.CourseCode.java` (final class with final fields) |
+| **Nested Classes** | `Course.Builder` (static nested), anonymous inner class in `CliHandler` |
+| **Interfaces** | `io.Persistable.java`, implemented by service classes |
+| **Lambdas & Func. I/F** | `CourseService.searchCourses()` with `Stream.filter()` predicate |
+| **Enums** | `domain.Grade.java`, `domain.Semester.java` (with fields & constructor) |
+| **Singleton Pattern** | `config.AppConfig.getInstance()` |
+| **Builder Pattern** | `domain.Course.Builder` for object construction |
+| **Exception Handling** | `try-catch-finally` in `ImportExportService`, `multi-catch` in `CliHandler` |
+| **Custom Exceptions** | `exception.MaxCreditLimitExceededException`, `DuplicateEnrollmentException` |
+| **Assertions** | `assert studentId != null;` in `StudentService.enrollStudent()` |
+| **File I/O (NIO.2)** | `io.BackupService.java` using `Path`, `Files.copy()`, `Files.walk()` |
+| **I/O with Streams** | `ImportExportService` using `Files.lines()` and `Files.write()` |
+| **Date/Time API** | `Enrollment.enrollmentDate`, timestamped backup folders in `BackupService` |
+| **Recursion** | `util.FileUtility.calculateDirectorySize(Path)` |
 
-* 1995: Java 1.0 released (Sun Microsystems).
-* 2004: Java 5 (Generics, Enums, Annotations).
-* 2011: Java 7 (try-with-resources, NIO.2).
-* 2014: Java 8 (Lambdas, Streams, Date/Time API).
-* 2017: Java 9+ (Modules, JShell).
-* 2021+: Java 17 (LTS) with sealed classes, pattern matching.
+-----
 
-### Java Editions
+## 5\. Usage & Configuration
 
-| Feature  | Java ME           | Java SE                                | Java EE            |
-| -------- | ----------------- | -------------------------------------- | ------------------ |
-| Use-case | Mobile & embedded | Desktop & core dev                     | Enterprise apps    |
-| Scope    | Lightweight       | Core libraries (util, io, collections) | Servlets, EJB, JPA |
-| Example  | Feature phones    | Local apps, CLI tools                  | Web apps, cloud    |
+### Enabling Assertions
 
-### JDK, JRE, JVM
+Run with the `-ea` flag to enable assertion checks: `java -ea -cp out edu.ccrm.cli.Main`
 
-* **JVM**: Executes Java bytecode.
-* **JRE**: JVM + libraries (runtime only).
-* **JDK**: JRE + compiler + dev tools.
-  👉 **Dev uses JDK, Users use JRE.**
+### Sample Data
 
----
+The `test-data` directory contains CSV files for import:
 
-## 🖥️ Installation (Windows)
+  * **`students.csv`:** `regNo,fullName,email`
+  * **`courses.csv`:** `code,title,credits,instructorId,semester,department`
 
-1. Download **JDK 17+** from [Oracle](https://www.oracle.com/java/technologies/javase-downloads.html).
-2. Install and set `JAVA_HOME`.
-3. Verify installation:
+### Design Justification: Interface vs. Class Inheritance
 
-   ```bash
-   java -version
-   ```
+  * **Class Inheritance (`Person` -\> `Student`)** models an **"is-a"** relationship for shared state and identity.
+  * **Interface (`Persistable`)** models a **"can-do"** capability, allowing unrelated classes like `StudentService` and `CourseService` to share a common behavior contract (saving/loading data) without a rigid class hierarchy.
 
-   (include screenshot in `/screenshots`).
+-----
 
-### Eclipse Setup
+## 6\. Acknowledgements
 
-1. Install **Eclipse IDE for Java Developers**.
-2. Create new project → `CCRM`.
-3. Add packages (`edu.ccrm.*`) and run `Main`.
-4. Screenshot setup + first run.
-
----
-
-## 📝 Assertions
-
-Enable assertions when running:
-
-```bash
-java -ea -cp bin edu.ccrm.Main
-```
-
-Used for:
-
-* Checking **non-null IDs**.
-* Validating **credit bounds**.
-
----
-
-## 📦 Deliverables
-
-* ✅ `src/` – Full source code
-* ✅ `README.md` (this file)
-* ✅ `USAGE.md` (sample commands & data files)
-* ✅ `test-data/` (CSV import samples)
-* ✅ `/screenshots/` folder (installation, IDE, runs, exports/backups)
-* 🎥 Optional demo video (YouTube/Drive link)
-
----
-
-## 🙏 Acknowledgements
-
-* Oracle Java Docs
-* Java Tutorials (docs.oracle.com/javase)
-* NIO.2 & Streams API guides
-
----
-
-Would you like me to also **make a USAGE.md with sample commands & sample CSV file formats** (students.csv, courses.csv) so that your project repo looks professional and demo-ready?
+  * Project completed based on the provided specifications.
+  * References: Official Oracle Java SE 17 Documentation.
