@@ -1,7 +1,3 @@
-Here’s a **draft README.md** for your **Campus Course & Records Manager (CCRM)** project.
-I’ve structured it exactly as per your project statement’s expectations. You can directly use this in your repo and just update with your **own screenshots, GitHub repo link, and demo video link** once ready.
-
----
 
 # Campus Course & Records Manager (CCRM)
 
